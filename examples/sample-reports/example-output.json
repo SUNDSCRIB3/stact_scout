@@ -1,0 +1,208 @@
+{
+  "project_path": "/home/runner/work/stact_scout/stact_scout/examples/sample-project",
+  "scan_timestamp": "2026-01-07T10:23:20.115674+00:00",
+  "summary": {
+    "language": [
+      "Python",
+      "TypeScript"
+    ],
+    "framework": [
+      "React",
+      "FastAPI"
+    ],
+    "build_tool": [
+      "ESLint",
+      "Prettier",
+      "TypeScript",
+      "pip"
+    ],
+    "devops": [
+      "Docker",
+      "GitHub Actions",
+      "Make",
+      "Terraform"
+    ]
+  },
+  "detections": [
+    {
+      "name": "Python",
+      "category": "language",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "file_path": ".",
+          "reason": "1 .py files found",
+          "line_number": null
+        },
+        {
+          "file_path": "api/main.py",
+          "reason": "Python source file",
+          "line_number": null
+        }
+      ],
+      "metadata": {
+        "file_count": 1
+      }
+    },
+    {
+      "name": "TypeScript",
+      "category": "language",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "file_path": ".",
+          "reason": "1 .ts, .tsx files found",
+          "line_number": null
+        },
+        {
+          "file_path": "src/App.tsx",
+          "reason": "TypeScript source file",
+          "line_number": null
+        }
+      ],
+      "metadata": {
+        "file_count": 1
+      }
+    },
+    {
+      "name": "React",
+      "category": "framework",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "file_path": "package.json",
+          "reason": "Found react in dependencies",
+          "line_number": null
+        },
+        {
+          "file_path": "src/App.tsx",
+          "reason": "React file",
+          "line_number": null
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "FastAPI",
+      "category": "framework",
+      "confidence": "low",
+      "evidence": [
+        {
+          "file_path": "requirements.txt",
+          "reason": "Found fastapi in requirements",
+          "line_number": null
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "ESLint",
+      "category": "build_tool",
+      "confidence": "low",
+      "evidence": [
+        {
+          "file_path": ".eslintrc.json",
+          "reason": "ESLint configuration file",
+          "line_number": null
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Prettier",
+      "category": "build_tool",
+      "confidence": "low",
+      "evidence": [
+        {
+          "file_path": ".prettierrc",
+          "reason": "Prettier configuration file",
+          "line_number": null
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "TypeScript",
+      "category": "build_tool",
+      "confidence": "low",
+      "evidence": [
+        {
+          "file_path": "tsconfig.json",
+          "reason": "TypeScript configuration file",
+          "line_number": null
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "pip",
+      "category": "build_tool",
+      "confidence": "low",
+      "evidence": [
+        {
+          "file_path": "requirements.txt",
+          "reason": "pip configuration file",
+          "line_number": null
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Docker",
+      "category": "devops",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "file_path": "Dockerfile",
+          "reason": "Docker configuration file",
+          "line_number": null
+        },
+        {
+          "file_path": "docker-compose.yml",
+          "reason": "Docker configuration file",
+          "line_number": null
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "GitHub Actions",
+      "category": "devops",
+      "confidence": "low",
+      "evidence": [
+        {
+          "file_path": ".github/workflows/",
+          "reason": "GitHub Actions directory",
+          "line_number": null
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Make",
+      "category": "devops",
+      "confidence": "low",
+      "evidence": [
+        {
+          "file_path": "Makefile",
+          "reason": "Make configuration file",
+          "line_number": null
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Terraform",
+      "category": "devops",
+      "confidence": "low",
+      "evidence": [
+        {
+          "file_path": "infrastructure/main.tf",
+          "reason": "Terraform configuration file",
+          "line_number": null
+        }
+      ],
+      "metadata": {}
+    }
+  ]
+}
