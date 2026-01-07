@@ -35,8 +35,8 @@ dev = [
 stack-scout = "stack_scout.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/lukebancroft4-max/stact_scout"
-Repository = "https://github.com/lukebancroft4-max/stact_scout"
+Homepage = "https://github.com/lukebancroft4-max/stack_scout"
+Repository = "https://github.com/lukebancroft4-max/stack_scout"
 
 [tool.setuptools.packages.find]
 where = ["."]

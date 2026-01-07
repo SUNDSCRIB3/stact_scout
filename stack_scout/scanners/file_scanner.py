@@ -1,7 +1,7 @@
 """File scanner for reading project files."""
 
 import os
-from typing import List, Dict, Set
+from typing import List, Dict, Set, Tuple, Optional
 from pathlib import Path
 
 
@@ -92,7 +92,7 @@ class FileScanner:
         self.root_path = os.path.abspath(root_path)
         self.max_depth = max_depth
     
-    def scan(self) -> tuple[List[str], Dict[str, str]]:
+    def scan(self) -> Tuple[List[str], Dict[str, str]]:
         """
         Scan the directory for files.
         
@@ -144,7 +144,7 @@ class FileScanner:
         
         return file_paths, file_contents
     
-    def _read_file(self, file_path: str) -> str | None:
+    def _read_file(self, file_path: str) -> Optional[str]:
         """
         Read file content safely.
         
