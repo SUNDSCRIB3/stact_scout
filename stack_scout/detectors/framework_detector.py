@@ -123,7 +123,7 @@ class FrameworkDetector(Detector):
                                 elif dep == pattern:
                                     detected[framework]["version"] = version
                                     detected[framework]["package"] = dep
-                except:
+                except json.JSONDecodeError:
                     pass
         
         # Convert detected dict to results

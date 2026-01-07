@@ -18,8 +18,8 @@
 ### From Source
 
 ```bash
-git clone https://github.com/lukebancroft4-max/stact_scout.git
-cd stact_scout
+git clone https://github.com/lukebancroft4-max/stack_scout.git
+cd stack_scout
 pip install -e .
 ```
 

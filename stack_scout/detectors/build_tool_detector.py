@@ -83,7 +83,7 @@ class BuildToolDetector(Detector):
                                     source_files=[file_path],
                                     metadata={"script": script_name}
                                 ))
-                except:
+                except json.JSONDecodeError:
                     pass
         
         return results

@@ -123,7 +123,7 @@ class LanguageDetector(Detector):
                                     parts = line.split("=", 1)
                                     if len(parts) > 1:
                                         return parts[1].strip().strip('"\'')
-                        except:
+                        except (ValueError, KeyError):
                             pass
                     # Check setup.py
                     if "setup.py" in file and "python_requires" in content:
@@ -131,7 +131,7 @@ class LanguageDetector(Detector):
                             for line in content.split("\n"):
                                 if "python_requires" in line:
                                     return line.split("=")[1].strip().strip('",\'')
-                        except:
+                        except (ValueError, KeyError, IndexError):
                             pass
         
         elif language in ["JavaScript/TypeScript", "JavaScript", "TypeScript"]:
@@ -141,7 +141,7 @@ class LanguageDetector(Detector):
                         package_data = json.loads(file_contents[file])
                         if "engines" in package_data and "node" in package_data["engines"]:
                             return package_data["engines"]["node"]
-                    except:
+                    except (json.JSONDecodeError, KeyError):
                         pass
         
         elif language == "Go":

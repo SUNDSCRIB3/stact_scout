@@ -162,6 +162,6 @@ class FileScanner:
             # Try to read as text
             with open(file_path, 'r', encoding='utf-8') as f:
                 return f.read()
-        except:
+        except (IOError, OSError, UnicodeDecodeError):
             # If we can't read it, skip it
             return None
