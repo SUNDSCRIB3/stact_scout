@@ -48,8 +48,17 @@ class FrameworkDetector(BaseDetector):
                     content = read_file_safe(req_file)
                     if content:
                         for dep in patterns['python_deps']:
-                            # Match package name at start of line or after ==, >=, etc.
-                            if re.search(rf'^{dep}[=<>~!]', content, re.MULTILINE | re.IGNORECASE):
+                            # Match a requirement name at the start of a line.
+                            # Support both versioned ("fastapi==1.0") and unversioned ("fastapi")
+                            # requirements, plus common suffixes like extras ("fastapi[all]"),
+                            # direct references ("fastapi @ ..."), env markers ("fastapi ; ..."),
+                            # whitespace, end-of-line, or comments.
+                            dep_escaped = re.escape(dep)
+                            if re.search(
+                                rf'^\s*{dep_escaped}(?=($|\s|#|[=<>~!\[;@]))',
+                                content,
+                                re.MULTILINE | re.IGNORECASE,
+                            ):
                                 rel_path = get_relative_path(req_file, project_path)
                                 evidence.append(Evidence(
                                     file_path=rel_path,

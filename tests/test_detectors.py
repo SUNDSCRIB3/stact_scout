@@ -41,6 +41,17 @@ def test_framework_detector():
     assert 'FastAPI' in detected_names
 
 
+def test_framework_detector_python_requirement_without_version(tmp_path: Path):
+    """Unversioned requirements (e.g. 'fastapi') should be detected."""
+    (tmp_path / "requirements.txt").write_text("fastapi  # no pin\n", encoding="utf-8")
+
+    detector = FrameworkDetector()
+    detections = detector.detect(tmp_path)
+    detected_names = [d.name for d in detections]
+
+    assert "FastAPI" in detected_names
+
+
 def test_build_tools_detector():
     """Test build tools detector on sample project."""
     detector = BuildToolsDetector()
