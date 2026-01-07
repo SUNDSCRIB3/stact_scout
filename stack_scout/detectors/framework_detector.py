@@ -244,7 +244,7 @@ class FrameworkDetector(Detector):
                                 for op in ["==", ">=", "<=", "~=", ">"]:
                                     if op in part:
                                         version_part = part.split(op, 1)[1].strip().split(",")[0].strip()
-                                        if version_part and version_part[0].isdigit():
+                                        if version_part and len(version_part) > 0 and version_part[0].isdigit():
                                             return op + version_part if op != "==" else version_part
                 
                 # Handle requirements.txt format

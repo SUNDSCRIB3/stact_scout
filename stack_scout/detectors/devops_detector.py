@@ -51,8 +51,11 @@ class DevOpsDetector(Detector):
             
             # Check path contains patterns
             for pattern, tool in self.DEVOPS_INDICATORS.items():
-                if pattern in file_path and tool not in detected:
-                    detected[tool] = [file_path]
+                if pattern in file_path:
+                    if tool not in detected:
+                        detected[tool] = []
+                    if file_path not in detected[tool]:
+                        detected[tool].append(file_path)
         
         # Special handling for GitHub Actions
         github_actions_files = [f for f in file_paths if ".github/workflows" in f and f.endswith((".yml", ".yaml"))]

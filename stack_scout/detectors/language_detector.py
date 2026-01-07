@@ -130,7 +130,9 @@ class LanguageDetector(Detector):
                         try:
                             for line in content.split("\n"):
                                 if "python_requires" in line:
-                                    return line.split("=")[1].strip().strip('",\'')
+                                    parts = line.split("=")
+                                    if len(parts) > 1:
+                                        return parts[1].strip().strip('",\'')
                         except (ValueError, KeyError, IndexError):
                             pass
         
