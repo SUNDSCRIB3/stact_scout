@@ -118,8 +118,11 @@ class LanguageDetector(Detector):
                     if "pyproject.toml" in file and "requires-python" in content:
                         try:
                             for line in content.split("\n"):
-                                if "requires-python" in line:
-                                    return line.split("=")[1].strip().strip('"\'')
+                                if "requires-python" in line and "=" in line:
+                                    # Split on first = only
+                                    parts = line.split("=", 1)
+                                    if len(parts) > 1:
+                                        return parts[1].strip().strip('"\'')
                         except:
                             pass
                     # Check setup.py

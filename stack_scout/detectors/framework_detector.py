@@ -100,6 +100,7 @@ class FrameworkDetector(Detector):
     def _detect_npm_frameworks(self, file_paths: List[str], file_contents: Dict[str, str]) -> List[DetectionResult]:
         """Detect JavaScript/TypeScript frameworks from package.json."""
         results = []
+        detected = {}  # Track detected frameworks to avoid duplicates
         
         for file_path in file_paths:
             if "package.json" in file_path and file_path in file_contents:
@@ -111,16 +112,30 @@ class FrameworkDetector(Detector):
                     for dep, version in dependencies.items():
                         for pattern, framework in self.NPM_FRAMEWORKS.items():
                             if pattern in dep:
-                                results.append(DetectionResult(
-                                    category="framework",
-                                    name=framework,
-                                    version=version,
-                                    confidence="high",
-                                    source_files=[file_path],
-                                    metadata={"package": dep}
-                                ))
+                                # Avoid duplicate React entries (react and react-dom both map to React)
+                                if framework not in detected:
+                                    detected[framework] = {
+                                        "version": version,
+                                        "file_path": file_path,
+                                        "package": dep
+                                    }
+                                # Update version if this is the main package (not -dom, -native, etc.)
+                                elif dep == pattern:
+                                    detected[framework]["version"] = version
+                                    detected[framework]["package"] = dep
                 except:
                     pass
+        
+        # Convert detected dict to results
+        for framework, data in detected.items():
+            results.append(DetectionResult(
+                category="framework",
+                name=framework,
+                version=data["version"],
+                confidence="high",
+                source_files=[data["file_path"]],
+                metadata={"package": data["package"]}
+            ))
         
         return results
     
@@ -218,8 +233,23 @@ class FrameworkDetector(Detector):
         """Extract version from Python dependency files."""
         for line in content.split("\n"):
             if package in line.lower():
+                # Handle pyproject.toml format: "package>=version"
+                if "pyproject.toml" in content[:100] or '"' in line:
+                    # Extract from quoted strings
+                    if '"' in line:
+                        parts = line.split('"')
+                        for part in parts:
+                            if package in part.lower() and any(op in part for op in ["==", ">=", "<=", "~=", ">"]):
+                                # Extract version operator and number
+                                for op in ["==", ">=", "<=", "~=", ">"]:
+                                    if op in part:
+                                        version_part = part.split(op, 1)[1].strip().split(",")[0].strip()
+                                        if version_part and version_part[0].isdigit():
+                                            return op + version_part if op != "==" else version_part
+                
+                # Handle requirements.txt format
                 if "==" in line:
-                    return line.split("==")[1].strip().split()[0]
+                    return line.split("==")[1].strip().split()[0].split(",")[0]
                 elif ">=" in line:
-                    return ">=" + line.split(">=")[1].strip().split()[0]
+                    return ">=" + line.split(">=")[1].strip().split()[0].split(",")[0]
         return ""
