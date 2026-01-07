@@ -1,0 +1,46 @@
+name: Stack Analysis
+description: 'Analyze technology stack of a repository'
+author: 'Stack-Scout Contributors'
+
+branding:
+  icon: 'search'
+  color: 'blue'
+
+inputs:
+  path:
+    description: 'Path to analyze (default: repository root)'
+    required: false
+    default: '.'
+  output-file:
+    description: 'JSON output file path (optional)'
+    required: false
+    default: ''
+
+outputs:
+  report-path:
+    description: 'Path to the generated JSON report (if output-file was specified)'
+    value: ${{ steps.scan.outputs.report-path }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install Stack-Scout
+      shell: bash
+      run: |
+        pip install -e ${{ github.action_path }}
+    
+    - name: Run Stack-Scout
+      id: scan
+      shell: bash
+      run: |
+        if [ -n "${{ inputs.output-file }}" ]; then
+          stack-scout "${{ inputs.path }}" --json "${{ inputs.output-file }}"
+          echo "report-path=${{ inputs.output-file }}" >> $GITHUB_OUTPUT
+        else
+          stack-scout "${{ inputs.path }}"
+        fi

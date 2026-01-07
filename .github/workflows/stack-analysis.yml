@@ -1,0 +1,42 @@
+name: Stack-Scout Self-Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    name: Analyze Repository Stack
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Stack-Scout
+        run: |
+          pip install -e .
+      
+      - name: Run Stack-Scout
+        run: |
+          stack-scout . --json stack-report.json
+      
+      - name: Display Report
+        run: |
+          echo "=== Stack Analysis Report ==="
+          cat stack-report.json
+      
+      - name: Upload Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: stack-report
+          path: stack-report.json
+          retention-days: 30
