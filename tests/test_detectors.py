@@ -71,6 +71,18 @@ def test_devops_detector():
     assert 'Make' in detected_names
 
 
+def test_devops_detector_circleci_nested_config(tmp_path: Path):
+    """CircleCI should be detected via nested .circleci/config.yml."""
+    (tmp_path / '.circleci').mkdir()
+    (tmp_path / '.circleci' / 'config.yml').write_text("version: 2.1\n", encoding="utf-8")
+
+    detector = DevOpsDetector()
+    detections = detector.detect(tmp_path)
+    detected_names = [d.name for d in detections]
+
+    assert 'CircleCI' in detected_names
+
+
 def test_confidence_calculation():
     """Test confidence calculation."""
     from stack_scout.detectors.base import BaseDetector

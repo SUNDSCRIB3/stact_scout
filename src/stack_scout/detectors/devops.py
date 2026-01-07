@@ -57,13 +57,24 @@ class DevOpsDetector(BaseDetector):
                             reason=f'{tool} configuration file'
                         ))
                 else:
-                    found_files = find_files_by_name(project_path, [pattern])
-                    for found_file in found_files[:3]:
-                        rel_path = get_relative_path(found_file, project_path)
-                        evidence.append(Evidence(
-                            file_path=rel_path,
-                            reason=f'{tool} configuration file'
-                        ))
+                    # If the pattern is a nested file path (e.g. ".circleci/config.yml"),
+                    # we can't use find_files_by_name() because it only matches file.name.
+                    if '/' in pattern:
+                        full_path = project_path / Path(pattern)
+                        if full_path.exists() and full_path.is_file():
+                            rel_path = get_relative_path(full_path, project_path)
+                            evidence.append(Evidence(
+                                file_path=rel_path,
+                                reason=f'{tool} configuration file'
+                            ))
+                    else:
+                        found_files = find_files_by_name(project_path, [pattern])
+                        for found_file in found_files[:3]:
+                            rel_path = get_relative_path(found_file, project_path)
+                            evidence.append(Evidence(
+                                file_path=rel_path,
+                                reason=f'{tool} configuration file'
+                            ))
             
             # Special case for Kubernetes: also check YAML files for k8s resources
             if tool == 'Kubernetes' and not evidence:
