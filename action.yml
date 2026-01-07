@@ -1,0 +1,39 @@
+name: 'Stack Scout'
+description: 'Detect technologies and tools used in your repository'
+branding:
+  icon: 'search'
+  color: 'blue'
+inputs:
+  path:
+    description: 'Path to scan'
+    default: '.'
+  output-format:
+    description: 'Output format (text or json)'
+    default: 'text'
+  upload-artifact:
+    description: 'Upload JSON report as artifact'
+    default: 'true'
+outputs:
+  report-json:
+    description: 'JSON report of detected technologies'
+    value: ${{ steps.scan.outputs.report }}
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - run: pip install -e ${{ github.action_path }}
+      shell: bash
+    - id: scan
+      run: |
+        stack-scout scan ${{ inputs.path }} --format ${{ inputs.output-format }} | tee report.txt
+        if [ "${{ inputs.output-format }}" = "json" ]; then
+          echo "report=$(cat report.txt)" >> $GITHUB_OUTPUT
+        fi
+      shell: bash
+    - uses: actions/upload-artifact@v4
+      if: inputs.upload-artifact == 'true'
+      with:
+        name: stack-scout-report
+        path: report.txt

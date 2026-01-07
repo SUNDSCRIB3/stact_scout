@@ -1,0 +1,16 @@
+name: Stack Scout Analysis
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          path: '.'
+          output-format: 'text'
+          upload-artifact: 'true'
