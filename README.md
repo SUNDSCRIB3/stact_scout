@@ -1,266 +1,382 @@
 # Stack Scout 🔍
 
-**Automated technology stack detection for software projects**
+A powerful CLI tool and GitHub Action that automatically analyzes your project's technology stack and generates comprehensive reports. Stack Scout detects programming languages, frameworks, build tools, and DevOps configurations to give you instant insights into any codebase.
 
-Stack Scout is a powerful CLI tool that automatically detects programming languages, frameworks, build tools, and DevOps configurations in your codebase. Perfect for developers, teams, and CI/CD pipelines.
+## Features
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](tests/)
+- 🔍 **Automatic Detection**: Scans your project directory to identify technologies
+- 📊 **Comprehensive Analysis**: Detects 15+ languages, 15+ frameworks, 15+ build tools, and 12+ DevOps tools
+- 📝 **Multiple Output Formats**: JSON, Markdown, or simple text reports
+- 🎯 **Smart Detection**: Uses file patterns, content analysis, and dependency files
+- 🚀 **GitHub Action**: Integrate stack analysis into your CI/CD pipeline
+- 💻 **Cross-Platform**: Works on Linux, macOS, and Windows
+- 🔧 **Extensible**: Easy to add support for new technologies
 
-## ✨ Features
+## Installation
 
-- 🔎 **Automatic Detection** - Scans your codebase and identifies technologies
-- 📊 **Evidence-Based** - Shows exactly where each technology was found
-- 🎯 **Confidence Scoring** - Rates detection confidence (high/medium/low)
-- 🎨 **Beautiful Output** - Rich terminal formatting with colors and trees
-- 📄 **JSON Export** - Machine-readable output for CI/CD integration
-- ⚡ **Fast Scanning** - Efficient directory traversal with smart exclusions
-- 🔧 **GitHub Action** - Easy integration into your workflows
-
-## 🚀 Quick Start
-
-### Installation
+### From PyPI (Recommended)
 
 ```bash
-# From PyPI (coming soon)
 pip install stack-scout
+```
 
-# From source
+### From Source
+
+```bash
 git clone https://github.com/lukebancroft4-max/stact_scout.git
 cd stact_scout
 pip install -e .
 ```
 
+### Requirements
+
+- Python 3.7 or higher
+- No external dependencies required for core functionality
+
+## Usage
+
 ### Basic Usage
 
+Analyze the current directory:
+
 ```bash
-# Scan current directory
-stack-scout scan .
-
-# Scan specific path
-stack-scout scan /path/to/project
-
-# Output JSON
-stack-scout scan . --format json
-
-# Save to file
-stack-scout scan . --output report.json
-
-# Show detailed evidence
-stack-scout scan . --verbose
+stack-scout
 ```
 
-## 📖 Example Output
+Analyze a specific directory:
 
-### Text Output
-
-```
-🔍 Stack Scout Report
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📦 Project: /home/user/my-project
-🕐 Scanned: 2026-01-07T10:23:28.248609+00:00
-
-💻 Languages (2)
-├── Python HIGH
-│   └── 45 files
-└── TypeScript HIGH
-    └── 23 files
-
-🚀 Frameworks (2)
-├── React HIGH
-│   └── Found react in dependencies
-└── FastAPI HIGH
-    └── Found fastapi in requirements
-
-🔧 Build Tools (5)
-├── Vite HIGH
-│   └── Vite configuration file
-├── TypeScript HIGH
-│   └── TypeScript configuration file
-├── ESLint HIGH
-│   └── ESLint configuration file
-├── Prettier MEDIUM
-│   └── Prettier configuration file
-└── pip HIGH
-    └── pip configuration file
-
-⚙️ DevOps (3)
-├── Docker HIGH
-│   └── Docker configuration file
-├── GitHub Actions HIGH
-│   └── GitHub Actions directory
-└── Terraform MEDIUM
-    └── Terraform configuration file
+```bash
+stack-scout /path/to/project
 ```
 
-### JSON Output
+### Output Formats
 
-```json
-{
-  "project_path": "/home/user/my-project",
-  "scan_timestamp": "2026-01-07T10:23:28.248609+00:00",
-  "summary": {
-    "language": ["Python", "TypeScript"],
-    "framework": ["React", "FastAPI"],
-    "build_tool": ["Vite", "TypeScript", "ESLint", "Prettier", "pip"],
-    "devops": ["Docker", "GitHub Actions", "Terraform"]
-  },
-  "detections": [...]
-}
+Generate a JSON report:
+
+```bash
+stack-scout --format json --output report.json
 ```
 
-## 🎯 Supported Technologies
+Generate a Markdown report:
 
-### Languages (15+)
-Python, TypeScript, JavaScript, Go, Java, Rust, Ruby, PHP, C++, C, C#, Swift, Kotlin, Scala, Shell
+```bash
+stack-scout --format markdown --output STACK_REPORT.md
+```
+
+Generate a text report:
+
+```bash
+stack-scout --format text --output stack.txt
+```
+
+### Command Line Options
+
+```
+usage: stack-scout [-h] [-f {json,markdown,text}] [-o OUTPUT] [path]
+
+Analyze project technology stack
+
+positional arguments:
+  path                  Path to the project directory (default: current directory)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -f {json,markdown,text}, --format {json,markdown,text}
+                        Output format (default: text)
+  -o OUTPUT, --output OUTPUT
+                        Output file path (default: stdout)
+```
+
+## Supported Technologies
+
+### Programming Languages (15+)
+
+- Python
+- JavaScript/TypeScript
+- Java
+- C/C++
+- C#
+- Go
+- Rust
+- Ruby
+- PHP
+- Swift
+- Kotlin
+- Scala
+- R
+- Shell/Bash
+- PowerShell
 
 ### Frameworks (15+)
-React, Vue, Angular, Next.js, Svelte, Express, Django, Flask, FastAPI, Streamlit, Spring Boot, Rails, Laravel
 
-### Build Tools (15+)
-npm, Yarn, pnpm, Vite, Webpack, Rollup, ESLint, Prettier, TypeScript, pip, Poetry, Pipenv, Maven, Gradle, Go Modules, Cargo, Bundler, Composer
+- **Python**: Django, Flask, FastAPI, Pytest
+- **JavaScript**: React, Vue.js, Angular, Next.js, Express, Svelte
+- **Java**: Spring Boot, Micronaut
+- **Ruby**: Rails
+- **.NET**: ASP.NET Core
+- **Go**: Gin
 
-### DevOps Tools (12+)
-Docker, Kubernetes, GitHub Actions, GitLab CI, Jenkins, CircleCI, Travis CI, Terraform, Ansible, CloudFormation, Pre-commit, Make
+### Build Tools & Package Managers (15+)
 
-## 🔧 GitHub Action
+- npm
+- Yarn
+- pnpm
+- pip
+- Poetry
+- Maven
+- Gradle
+- Cargo
+- Go Modules
+- Composer
+- Bundler
+- NuGet
+- Make
+- CMake
+- Webpack
 
-Use Stack Scout in your GitHub workflows:
+### DevOps & Infrastructure (12+)
+
+- Docker
+- Kubernetes
+- Terraform
+- Ansible
+- GitHub Actions
+- GitLab CI
+- Jenkins
+- CircleCI
+- Travis CI
+- Azure Pipelines
+- Vagrant
+- Helm
+
+## GitHub Action
+
+Integrate Stack Scout into your CI/CD pipeline to automatically analyze and document your project's technology stack.
+
+### Basic Usage
 
 ```yaml
 name: Stack Analysis
-on: [push, pull_request]
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: lukebancroft4-max/stact_scout@v1
+      - uses: actions/checkout@v3
+      
+      - name: Analyze Stack
+        uses: lukebancroft4-max/stact_scout@v1
         with:
-          path: '.'
-          output-format: 'text'
-          upload-artifact: 'true'
+          format: 'markdown'
+          output: 'STACK_REPORT.md'
 ```
 
 ### Action Inputs
 
-| Input | Description | Default |
-|-------|-------------|---------|
-| `path` | Path to scan | `.` |
-| `output-format` | Output format (`text` or `json`) | `text` |
-| `upload-artifact` | Upload report as artifact | `true` |
+| Input | Description | Required | Default |
+|-------|-------------|----------|---------|
+| `path` | Path to analyze | No | `.` |
+| `format` | Output format (json/markdown/text) | No | `text` |
+| `output` | Output file path | No | stdout |
 
 ### Action Outputs
 
 | Output | Description |
 |--------|-------------|
-| `report-json` | JSON report of detected technologies |
+| `report` | The generated stack analysis report |
+| `technologies-count` | Total number of technologies detected |
 
-## 🏗️ Architecture
+### Advanced Usage
 
-Stack Scout uses a modular detector architecture:
+Upload the report as an artifact:
 
+```yaml
+- name: Analyze Stack
+  uses: lukebancroft4-max/stact_scout@v1
+  with:
+    format: 'markdown'
+    output: 'STACK_REPORT.md'
+
+- name: Upload Report
+  uses: actions/upload-artifact@v3
+  with:
+    name: stack-report
+    path: STACK_REPORT.md
 ```
-src/stack_scout/
-├── cli.py              # CLI interface (Click + Rich)
-├── scanner.py          # Orchestrates all detectors
-├── models.py           # Data models (Detection, Evidence, Report)
-├── utils.py            # File system utilities
-└── detectors/
-    ├── base.py         # Base detector class
-    ├── patterns.py     # Technology patterns
-    ├── languages.py    # Language detection
-    ├── frameworks.py   # Framework detection
-    ├── build_tools.py  # Build tools detection
-    └── devops.py       # DevOps tools detection
+
+Comment on PR with the analysis:
+
+```yaml
+- name: Analyze Stack
+  id: analyze
+  uses: lukebancroft4-max/stact_scout@v1
+  with:
+    format: 'markdown'
+    output: 'STACK_REPORT.md'
+
+- name: Comment PR
+  uses: actions/github-script@v6
+  with:
+    script: |
+      const fs = require('fs');
+      const report = fs.readFileSync('STACK_REPORT.md', 'utf8');
+      github.rest.issues.createComment({
+        issue_number: context.issue.number,
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        body: report
+      });
 ```
 
-Each detector:
-1. Scans the project directory
-2. Looks for evidence (files, configs, dependencies)
-3. Calculates confidence based on evidence strength
-4. Returns detections with full evidence trail
+## Architecture
 
-## 🧪 Development
+Stack Scout uses a modular detection system:
 
-### Setup
+1. **File System Scanner**: Traverses the project directory
+2. **Pattern Matchers**: Identifies files by name and extension
+3. **Content Analyzers**: Examines file contents for specific patterns
+4. **Dependency Parsers**: Reads package.json, requirements.txt, pom.xml, etc.
+5. **Report Generators**: Formats output in JSON, Markdown, or text
+
+### Detection Logic
+
+- **Languages**: Detected by file extensions and shebang lines
+- **Frameworks**: Identified through dependency files and configuration files
+- **Build Tools**: Found via lock files, config files, and build scripts
+- **DevOps**: Detected through CI/CD config files and infrastructure-as-code files
+
+## Development
+
+### Setup Development Environment
 
 ```bash
-# Clone repository
+# Clone the repository
 git clone https://github.com/lukebancroft4-max/stact_scout.git
 cd stact_scout
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install in development mode
 pip install -e .
 
-# Install dev dependencies
-pip install -r requirements-dev.txt
+# Install development dependencies
+pip install pytest black flake8 mypy
 ```
 
 ### Running Tests
 
 ```bash
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=stack_scout --cov-report=html
-
-# Run specific test
-pytest tests/test_scanner.py
+pytest tests/
 ```
 
-### Code Quality
+### Code Style
 
 ```bash
 # Format code
-black src/ tests/
+black stack_scout/
 
-# Lint code
-ruff check src/ tests/
+# Check linting
+flake8 stack_scout/
+
+# Type checking
+mypy stack_scout/
 ```
 
-## 🤝 Contributing
+### Project Structure
 
-Contributions are welcome! Here are some ways you can help:
+```
+stact_scout/
+├── stack_scout/
+│   ├── __init__.py
+│   ├── __main__.py
+│   ├── scanner.py       # Core scanning logic
+│   ├── detectors.py     # Technology detection
+│   ├── reporters.py     # Output formatting
+│   └── cli.py          # Command-line interface
+├── tests/
+│   ├── test_scanner.py
+│   ├── test_detectors.py
+│   └── test_reporters.py
+├── action.yml          # GitHub Action definition
+├── setup.py           # Package configuration
+├── README.md
+└── LICENSE
+```
 
-- 🐛 Report bugs
-- 💡 Suggest new features
-- 📝 Improve documentation
-- 🔧 Add support for new technologies
-- ✅ Write tests
+## Contributing
 
-### Adding New Technology Detections
+Contributions are welcome! Here's how you can help:
 
-1. Add pattern to `src/stack_scout/detectors/patterns.py`
-2. Update corresponding detector if needed
-3. Add test in `tests/test_detectors.py`
-4. Update README with new technology
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/new-detector`
+3. **Make your changes**
+4. **Add tests** for new functionality
+5. **Run tests**: `pytest tests/`
+6. **Format code**: `black stack_scout/`
+7. **Commit changes**: `git commit -m "feat: add support for Elixir"`
+8. **Push to branch**: `git push origin feature/new-detector`
+9. **Open a Pull Request**
 
-## 📝 License
+### Adding New Technology Detectors
+
+To add support for a new technology, update the relevant detector in `stack_scout/detectors.py`:
+
+```python
+def detect_languages(self, files):
+    patterns = {
+        'Elixir': r'\.exs?$',
+        # ... existing patterns
+    }
+    # ... detection logic
+```
+
+### Commit Convention
+
+We follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+- `feat:` New features
+- `fix:` Bug fixes
+- `docs:` Documentation changes
+- `test:` Test additions or changes
+- `refactor:` Code refactoring
+- `chore:` Maintenance tasks
+
+## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
-## 🗺️ Roadmap
+## Roadmap
 
-- [ ] PyPI publication
-- [ ] More language support (Elixir, Haskell, OCaml, etc.)
-- [ ] Database detection (PostgreSQL, MongoDB, Redis, etc.)
-- [ ] Cloud provider detection (AWS, Azure, GCP)
-- [ ] Dependency version tracking
-- [ ] Security scanning integration
-- [ ] Visual reports (HTML/PDF)
-- [ ] VS Code extension
-- [ ] CI/CD templates generation
+- [ ] Add support for more languages (Dart, Haskell, Clojure)
+- [ ] Detect database technologies
+- [ ] Cloud platform detection (AWS, Azure, GCP)
+- [ ] Generate dependency graphs
+- [ ] Security vulnerability scanning
+- [ ] License compliance checking
+- [ ] Web dashboard for visualization
+- [ ] IDE extensions (VS Code, IntelliJ)
+- [ ] API for programmatic access
+- [ ] Machine learning for better detection accuracy
 
-## 📧 Contact
+## Support
 
-- GitHub: [@lukebancroft4-max](https://github.com/lukebancroft4-max)
-- Issues: [GitHub Issues](https://github.com/lukebancroft4-max/stact_scout/issues)
+- 🐛 **Bug Reports**: [Open an issue](https://github.com/lukebancroft4-max/stact_scout/issues)
+- 💡 **Feature Requests**: [Start a discussion](https://github.com/lukebancroft4-max/stact_scout/discussions)
+- 📖 **Documentation**: [Wiki](https://github.com/lukebancroft4-max/stact_scout/wiki)
+
+## Acknowledgments
+
+- Inspired by GitHub's linguist and Stack Overflow's technology trends
+- Built with ❤️ by the open-source community
 
 ---
 
-Made with ❤️ by the Stack Scout team
+**Stack Scout** - Know your stack, instantly. 🔍✨
