@@ -112,12 +112,16 @@ def scan(path: str, output_format: str, output: str, verbose: bool):
             # Text format
             if output:
                 # Redirect console output to file
-                file_console = Console(file=open(output, 'w'))
                 old_console = globals()['console']
-                globals()['console'] = file_console
-                display_report(report, verbose)
-                globals()['console'] = old_console
-                file_console.file.close()
+                try:
+                    with open(output, 'w', encoding='utf-8') as f:
+                        file_console = Console(file=f)
+                        globals()['console'] = file_console
+                        display_report(report, verbose)
+                finally:
+                    # Always restore the global console, even if rendering fails.
+                    globals()['console'] = old_console
+
                 console.print(f"✅ Report saved to {output}")
             else:
                 display_report(report, verbose)
