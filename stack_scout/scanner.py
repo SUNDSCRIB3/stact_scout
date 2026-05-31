@@ -9,6 +9,9 @@ from .detectors import (
     PackageManagerDetector,
     BuildToolDetector,
     DevOpsDetector,
+    DatabaseDetector,
+    CloudDetector,
+    LicenseDetector,
 )
 
 
@@ -23,6 +26,9 @@ class StackScanner:
             PackageManagerDetector(),
             BuildToolDetector(),
             DevOpsDetector(),
+            DatabaseDetector(),
+            CloudDetector(),
+            LicenseDetector(),
         ]
     
     def scan_directory(self, path: str) -> List[DetectionResult]:

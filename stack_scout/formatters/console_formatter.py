@@ -26,6 +26,9 @@ class ConsoleFormatter:
         "package_manager": "📦",
         "build_tool": "🔨",
         "devops": "🚀",
+        "database": "🗄️",
+        "cloud": "☁️",
+        "license": "📜",
     }
     
     def __init__(self, use_colors: bool = True):
@@ -69,7 +72,7 @@ class ConsoleFormatter:
         output.append("")
         
         # Details by category
-        for category in ["language", "framework", "package_manager", "build_tool", "devops"]:
+        for category in ["language", "framework", "package_manager", "build_tool", "devops", "database", "cloud", "license"]:
             if category in grouped:
                 output.append(self._format_category(category, grouped[category]))
                 output.append("")

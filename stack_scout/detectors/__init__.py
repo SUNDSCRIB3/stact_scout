@@ -6,6 +6,9 @@ from .framework_detector import FrameworkDetector
 from .package_manager_detector import PackageManagerDetector
 from .build_tool_detector import BuildToolDetector
 from .devops_detector import DevOpsDetector
+from .database_detector import DatabaseDetector
+from .cloud_detector import CloudDetector
+from .license_detector import LicenseDetector
 
 __all__ = [
     "Detector",
@@ -15,4 +18,7 @@ __all__ = [
     "PackageManagerDetector",
     "BuildToolDetector",
     "DevOpsDetector",
+    "DatabaseDetector",
+    "CloudDetector",
+    "LicenseDetector",
 ]

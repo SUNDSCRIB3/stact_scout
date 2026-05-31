@@ -1,4 +1,4 @@
-name: Stack-Scout Self-Test
+name: Stack-Scout CI
 
 on:
   push:
@@ -8,35 +8,49 @@ on:
   workflow_dispatch:
 
 jobs:
-  analyze:
+  test:
     runs-on: ubuntu-latest
-    name: Analyze Repository Stack
-    
-    permissions:
-      contents: read
-    
+    name: Run Tests
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
+      - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
+      - name: Install with dev deps
+        run: pip install -e ".[dev]"
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short --cov=stack_scout --cov-report=term-missing
+
+  analyze:
+    runs-on: ubuntu-latest
+    name: Self-Analysis
+    needs: test
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
       - name: Install Stack-Scout
-        run: |
-          pip install -e .
-      
+        run: pip install -e .
+
       - name: Run Stack-Scout
-        run: |
-          stack-scout . --json stack-report.json
-      
+        run: stack-scout . --json stack-report.json
+
       - name: Display Report
         run: |
           echo "=== Stack Analysis Report ==="
           cat stack-report.json
-      
+
       - name: Upload Report Artifact
         uses: actions/upload-artifact@v4
         with:

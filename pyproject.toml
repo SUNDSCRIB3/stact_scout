@@ -4,24 +4,29 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stack-scout"
-version = "0.1.0"
-description = "Technology stack detection tool for code repositories"
+version = "1.0.0"
+description = "Technology stack detection tool for code repositories — detects languages, frameworks, package managers, build tools, databases, cloud providers, and DevOps tooling"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "MIT"}
+license = {text = "Apache-2.0"}
 authors = [
     {name = "Stack-Scout Contributors"}
 ]
+keywords = ["stack", "detection", "codebase", "analysis", "technology", "devops", "ci"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: System :: Systems Administration",
 ]
 dependencies = []
 
@@ -29,14 +34,17 @@ dependencies = []
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
+    "pytest-mock>=3.10",
 ]
+
+[project.urls]
+Homepage = "https://github.com/lukebancroft4-max/stact_scout"
+Repository = "https://github.com/lukebancroft4-max/stact_scout"
+"Bug Tracker" = "https://github.com/lukebancroft4-max/stact_scout/issues"
+Documentation = "https://github.com/lukebancroft4-max/stact_scout#readme"
 
 [project.scripts]
 stack-scout = "stack_scout.cli:main"
-
-[project.urls]
-Homepage = "https://github.com/lukebancroft4-max/stack_scout"
-Repository = "https://github.com/lukebancroft4-max/stack_scout"
 
 [tool.setuptools.packages.find]
 where = ["."]
