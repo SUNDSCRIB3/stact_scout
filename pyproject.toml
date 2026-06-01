@@ -38,10 +38,11 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/lukebancroft4-max/stact_scout"
-Repository = "https://github.com/lukebancroft4-max/stact_scout"
-"Bug Tracker" = "https://github.com/lukebancroft4-max/stact_scout/issues"
-Documentation = "https://github.com/lukebancroft4-max/stact_scout#readme"
+Homepage = "https://github.com/SUNDSCRIB3/stact_scout"
+Repository = "https://github.com/SUNDSCRIB3/stact_scout"
+"Issue Tracker" = "https://github.com/SUNDSCRIB3/stact_scout/issues"
+"Bug Tracker" = "https://github.com/SUNDSCRIB3/stact_scout/issues"
+Documentation = "https://github.com/SUNDSCRIB3/stact_scout#readme"
 
 [project.scripts]
 stack-scout = "stack_scout.cli:main"
